@@ -11,6 +11,9 @@ const fullUrl = (path = '') => {
     if (program.type) {
       url += program.type + '/';
     }
+    if (program.id) {
+      url += program.id + '/'
+    }
   }
   return url + path.replace(/^\/*/, '');
 }
@@ -24,7 +27,8 @@ program
 .option('-j, --json', 'format output as JSON')
 .option('-i, --index <name>', 'which index to use')
 .option('-t, --type <type>', 'default type for bulk operations')
-.option('-f, --filter <filter>', 'source filter for query results');
+.option('-f, --filter <filter>', 'source filter for query results')
+.option('-id, --id <id>', 'id of a document');
 
 program
 .command('url [path]')
@@ -141,6 +145,39 @@ program
     return;
   }
   request.del(fullUrl(), handleResponse);
+});
+
+program
+.command('put <file>')
+.description('read a file and insert/overwrite a single, new document for indexing')
+.action(file => {
+  fs.stat(file, (err, stat) => {
+    if (err) {
+      if (program.json) {
+        console.log(JSON.stringify(err));
+        return;
+      }
+      throw err;
+    }
+    if (program.id) {
+      const options = {
+        url: fullUrl('_id'),
+        json: true,
+        headers: {
+          'content-length': stat.size,
+          'content-type': 'application/json'
+        }
+      };
+    const req = request.post(options);
+    const streams = fs.createReadStream(file);
+    streams.pipe(req);
+    req.pipe(process.stdout);
+    } else {
+      const msg = 'Id not specified!';
+      console.log(JSON.stringify({Error: msg}));
+      return;
+    }
+  });
 });
 
 program.parse(process.argv);

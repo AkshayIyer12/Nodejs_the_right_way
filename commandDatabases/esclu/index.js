@@ -123,11 +123,11 @@ program
 
   if (queries && queries.length) {
     options.qs.q = queries.join(' ');
-    if (program.filter) {
-      option.qs._source = program.filter;
-    }
-    request(options, handleResponse);
   }
+  if (program.filter) {
+    options.qs._source = program.filter;
+  }
+  request(options, handleResponse);
 });
 
 program.parse(process.argv);

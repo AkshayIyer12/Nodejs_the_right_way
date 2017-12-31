@@ -130,6 +130,19 @@ program
   request(options, handleResponse);
 });
 
+program
+.command('delete-index')
+.description('delete an index')
+.action(() => {
+  if (!program.index) {
+    const msg = 'No index specified! Use --index <name>';
+    if (!program.json) throw Error(msg);
+    console.log(JSON.stringify({error: msg}));
+    return;
+  }
+  request.del(fullUrl(), handleResponse);
+});
+
 program.parse(process.argv);
 
 if (!program.args.filter(arg => typeof arg === 'object').length) {

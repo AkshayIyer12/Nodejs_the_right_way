@@ -1,0 +1,6 @@
+
+'use strict';
+const request = require('request');
+module.exports = (app, es) => {
+  const url = `http://${es.host}:${es.port}/${es.books._index}/book/_search`;
+}

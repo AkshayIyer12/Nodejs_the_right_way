@@ -23,4 +23,15 @@ module.exports = (app, es) => {
       res.status(esResErr.statusCode || 502).json(esResErr.error);
     }
   });
+  app.put('/api/bundle/:id/name/:name', async (req, res) => {
+    const bundleUrl = `${url}/${req.params.id}`;
+    try {
+      const bundle = (await rp({url: bundleUrl, json: true}))._source;
+      bundle.name = req.params.name;
+      const esResBody = await rp.put({url: bundleUrl, body: bundle, json: true});
+      res.status(200).json(esResBody);
+    } catch (esResErr) {
+      res.status(esResErr.statusCode || 502).json(esResErr.error)
+    }
+  });
 };

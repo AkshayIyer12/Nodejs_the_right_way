@@ -1,7 +1,8 @@
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import 'bootstrap';
-
+import '../node_modules/bootstrap-social/bootstrap-social.css';
+import '../node_modules/font-awesome/css/font-awesome.min.css';
 import * as templates from './templates.ts';
 
 /**

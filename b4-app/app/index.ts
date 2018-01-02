@@ -47,11 +47,11 @@ const deleteBundle = async (bundleId) => {
 		return bundle
 	    }
 	});
-	const res = await fetch(`/api/bundle/${filteredBundle.id}`, {method: 'DELETE'});
+	const res = await fetch(`/api/bundle/${filteredBundle[0].id}`, {method: 'DELETE'});
 	const msg = res.json();
 	bundles.splice(foundIndex, 1);
 	listBundles(bundles);
-	showAlert(`Bundle deleted!`, 'success'); 
+	showAlert(`Bundle ${filteredBundle[0].name} deleted!`, 'success'); 
     } catch (err) {
 	showAlert(err)
     }

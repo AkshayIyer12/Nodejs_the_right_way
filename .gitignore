@@ -16,3 +16,5 @@ commandDatabases/esclu/index.js~
 developing-RESTful-Web-Services/web-services/b4/server.js~
 developing-RESTful-Web-Services/web-services/b4/node_modules
 developing-RESTful-Web-Services/web-services/b4/lib/search.js~
+developing-RESTful-Web-Services/web-services/b4/lib/bundle.js~
+.gitignore.swp

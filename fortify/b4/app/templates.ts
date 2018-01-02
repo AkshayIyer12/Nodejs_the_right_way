@@ -28,6 +28,24 @@ export const welcome = Handlebars.compile(`
     <h1>Welcome!</h1>
     <p>B4 is an application for creating book bundles.</p>
   </div>
+  {{#if session.auth}}
+  <p>View your <a href="#list-bundles">bundles</a>.</p>
+  {{else}}
+  <p>Sign in with any of these services to begin.</p>
+  <div class="row">
+    <div class="col-sm-6">
+      <a href="/auth/facebook" class="btn btn-block btn-social btn-facebook">
+       Sign in with Facebook
+      </a>
+      <a href="/auth/twitter" class="btn btn-block btn-social btn-twitter">
+       Sign in with Twitter
+      </a>
+      <a href="/auth/google" class="btn btn-block btn-social btn-google">
+       Sign in with Google
+      </a>
+    </div>
+  </div>
+{{/if}}
 `);
 
 export const alert = Handlebars.compile(`

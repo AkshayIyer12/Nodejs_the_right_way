@@ -11,4 +11,16 @@ module.exports = (app, es) => {
     .then(esResBody => res.status(201).json(esResBody))
     .catch(({error}) => res.status(error.status(error.status || 502).json(error)));
   });
+  app.get('/api/bundle/:id', async (req, res) => {
+    const options = {
+      url: `${url}/${req.params.id}`,
+      json: true
+    };
+    try {
+      const esResBody = await rp(options);
+      res.status(200).json(esResBody);
+    } catch (esResErr) {
+      res.status(esResErr.statusCode || 502).json(esResErr.error);
+    }
+  });
 };

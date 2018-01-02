@@ -16,7 +16,19 @@ const getBundles = async () => {
 };
 
 const listBundles = bundles => {
-    mainElement.innerHTML = templates.listBundles({bundles});
+    mainElement.innerHTML = templates.addBundleForm() + templates.listBundles({bundles});
+
+    const form = mainElement.querySelector('form');
+    form.addEventListener('submit', event => {
+	event.preventDefault();
+	const name = form.querySelector('input').value;
+	addBundle(name);
+    });
+};
+
+const showAlert = (message, type = 'danger') => {
+    const html = templates.alert({type, message});
+    alertsElement.insertAdjacentHTML('beforeend', html);
 };
 
 const showView = async () => {
@@ -30,6 +42,21 @@ const showView = async () => {
 	listBundles(bundles);
 	break;
     default: throw Error(`Unrecognized view: ${view}`);
+    }
+};
+
+const addBundle = async (name) => {
+    try {
+	const bundles = await getBundles();
+	const url = `/api/bundle?name=${encodeURIComponent(name)}`
+	const res = await fetch(url, {method: 'POST'});
+	const resBody = await res.json();
+
+	bundles.push({id: resBody._id, name});
+	listBundles(bundles);
+	showAlert(`Bundle "${name}" created!`, 'success');
+    } catch (err) {
+	showAlert(err);
     }
 };
 

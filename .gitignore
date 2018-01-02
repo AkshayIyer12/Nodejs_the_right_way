@@ -18,3 +18,6 @@ developing-RESTful-Web-Services/web-services/b4/node_modules
 developing-RESTful-Web-Services/web-services/b4/lib/search.js~
 developing-RESTful-Web-Services/web-services/b4/lib/bundle.js~
 .gitignore.swp
+b4-app/entry.js~
+b4-app/node_modules
+b4-app/webpack.config.js

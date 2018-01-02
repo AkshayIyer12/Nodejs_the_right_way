@@ -3,7 +3,7 @@ const path = require('path');
 const distDir = path.resolve(__dirname, 'dist');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   entry: './app/index.ts',
   output: {
@@ -30,7 +30,8 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
-    })
+    }),
+    new ExtractTextPlugin("styles.css")
   ],
   module: {
     rules: [{
@@ -38,7 +39,10 @@ module.exports = {
       loader: 'ts-loader'
     },{
       test: /\.css$/,
-      use: [ 'style-loader', 'css-loader' ]
+      use: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: "css-loader"
+      })
     }, {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
       loader: 'url-loader?limit=100000'

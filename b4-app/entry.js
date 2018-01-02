@@ -1,5 +1,6 @@
 'use strict';
 import './node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
 document.body.innerHTML = `
   <div class="container">
     <h1>B4 - Book Bundler</h1>
@@ -17,7 +18,7 @@ mainElement.innerHTML = `
 `;
 
 const alertsElement = document.body.querySelector('.b4-alerts');
-alertElement.innerHTML = `
+alertsElement.innerHTML = `
   <div class="alert alert-success alert-dismissible fade-in" role="alert">
     <button class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

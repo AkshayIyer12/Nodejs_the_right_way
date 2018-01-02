@@ -35,7 +35,14 @@ if (isDev) {
 } else {
   // Use Redis in production mode
 }
-
+const passport = require('passport');
+passport.serializeUser((profile, done) => done(null, {
+  id: profile.id,
+  provider: profile.provider
+}));
+passport.deserializeUser((user, done) => done(null, user));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(morgan('dev'));
 
 app.get('/api/version', (req, res) => res.status(200).json(pkg.version));

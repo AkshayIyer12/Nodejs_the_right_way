@@ -59,4 +59,14 @@ if (isDev) {
   app.use(express.static('dist'));
 }
 
+app.get('/api/session', (req, res) => {
+  const session = {auth: req.isAuthenticated()};
+  res.status(200).json(session);
+});
+
+app.get('/auth/signout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
 app.listen(servicePort, () => console.log('Ready.'));

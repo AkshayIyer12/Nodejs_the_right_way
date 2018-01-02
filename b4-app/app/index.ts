@@ -24,6 +24,37 @@ const listBundles = bundles => {
 	const name = form.querySelector('input').value;
 	addBundle(name);
     });
+    try {
+	const deleteButtons = mainElement.querySelectorAll('button.delete');
+	for (let i = 0; i < deleteButtons.length; i++) {
+	    const deleteButton = deleteButtons[i];
+	    deleteButton.addEventListener('click', event => {
+		deleteBundle(deleteButton.getAttribute('data-bundle-id'));
+	    });
+	}
+    } catch (err) {
+	showAlert(err)
+    }
+};
+
+const deleteBundle = async (bundleId) => {
+    try {
+	let foundIndex = 0
+	let bundles = await getBundles()
+	const filteredBundle = bundles.filter((bundle, index) => {
+	    if (bundle.id === bundleId) {
+		foundIndex = index
+		return bundle
+	    }
+	});
+	const res = await fetch(`/api/bundle/${filteredBundle.id}`, {method: 'DELETE'});
+	const msg = res.json();
+	bundles.splice(foundIndex, 1);
+	listBundles(bundles);
+	showAlert(`Bundle deleted!`, 'success'); 
+    } catch (err) {
+	showAlert(err)
+    }
 };
 
 const showAlert = (message, type = 'danger') => {

@@ -15,7 +15,16 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Better Book Bundle Builder'
+     title: 'Better Book Bundle Builder'
     })
-  ]
+  ],
+  module: {
+    rules: [{
+      test: /\.css$/,
+      use: [ 'style-loader', 'css-loader' ]
+    }, {
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000'
+    }]
+  }
 };

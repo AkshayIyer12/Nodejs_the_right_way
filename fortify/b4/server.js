@@ -35,6 +35,7 @@ if (isDev) {
 } else {
   // Use Redis in production mode
 }
+
 const passport = require('passport');
 passport.serializeUser((profile, done) => done(null, {
   id: profile.id,
@@ -43,6 +44,7 @@ passport.serializeUser((profile, done) => done(null, {
 passport.deserializeUser((user, done) => done(null, user));
 app.use(passport.initialize());
 app.use(passport.session());
+
 const FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
   clientID: nconf.get('auth:facebook:appID'),
